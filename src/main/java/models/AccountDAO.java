@@ -1,10 +1,8 @@
 package models;
 
-import java.util.Collection;
-
 public interface AccountDAO {
-	void saveAccount(Account account);
-	void updateAccount(Account account);
-	Account loadAccount(String accountnumber);
-	Collection<Account> getAccounts();
+	boolean findAccount(String accountNumber);
+	void addAccount(String accountNumber, Account account);
+	Account getAccount(String accountNumber);
+	boolean updateAccount(Account account);
 }
