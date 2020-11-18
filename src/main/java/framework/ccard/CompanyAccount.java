@@ -1,28 +1,22 @@
 package framework.ccard;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class CompanyAccount implements Customer {
     private String fullName;
-    private String ID;
-    private LocalDate dateEstablished;
+    private static final AtomicInteger count = new AtomicInteger(0);
+    private final int ID;
     private String email;
-    private int phoneNumber;
     private Address address;
     List<Account> myAccountList;
 
-    public CompanyAccount(String fullName,String ID, String email, int phoneNumber,Address address, int yearEstablished, int monthEstablished, int dayEstablished) {
+    public CompanyAccount(String fullName, String email, Address address) {
         this.fullName = fullName;
-        this.ID = ID;
+        this.ID = count.incrementAndGet();
         this.email = email;
-        this.phoneNumber = phoneNumber;
         this.address = address;
-        GregorianCalendar gregorianCalendar = new GregorianCalendar();
-        gregorianCalendar.set(yearEstablished,monthEstablished-1,dayEstablished);
-        dateEstablished = gregorianCalendar.toZonedDateTime().toLocalDate();
         myAccountList = new ArrayList<>();
     }
 
@@ -32,18 +26,8 @@ public class CompanyAccount implements Customer {
     }
 
     @Override
-    public LocalDate getAge() {
-        return dateEstablished;
-    }
-
-    @Override
     public String getEmail() {
         return email;
-    }
-
-    @Override
-    public int getPhoneNumber() {
-        return phoneNumber;
     }
 
     @Override
@@ -53,14 +37,13 @@ public class CompanyAccount implements Customer {
 
     @Override
     public String getID() {
-        return ID;
+        return ID + "";
     }
 
     @Override
     public void setAccount(Account account) {
         myAccountList.add(account);
     }
-
 
     @Override
     public void update() {

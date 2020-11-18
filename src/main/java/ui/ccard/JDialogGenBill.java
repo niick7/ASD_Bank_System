@@ -67,8 +67,6 @@ public class JDialogGenBill extends javax.swing.JDialog
 		this((Frame)null);
 	}
 
-
-
 	//{{DECLARE_CONTROLS
 	javax.swing.JScrollPane JScrollPane1 = new javax.swing.JScrollPane();
 	javax.swing.JTextField JTextField1 = new javax.swing.JTextField();
@@ -89,6 +87,5 @@ public class JDialogGenBill extends javax.swing.JDialog
 	void JButtonOK_actionPerformed(java.awt.event.ActionEvent event)
 	{
 		dispose();
-			 
 	}
 }

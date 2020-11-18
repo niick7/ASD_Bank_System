@@ -3,12 +3,12 @@ package ui.ccard;
 		A basic implementation of the JDialog class.
 */
 
-public class JDialog_AddCCAccount extends javax.swing.JDialog
-{
-    private CardFrm parentframe;
+import framework.ccard.*;
+
+public class JDialog_AddCCAccount extends javax.swing.JDialog {
+	private CardFrm parentframe;
     
-	public JDialog_AddCCAccount(CardFrm parent)
-	{
+	public JDialog_AddCCAccount(CardFrm parent) {
 		super(parent);
 		parentframe=parent;
 		
@@ -25,6 +25,7 @@ public class JDialog_AddCCAccount extends javax.swing.JDialog
 		setVisible(false);
 		JRadioButton_Gold.setText("Gold");
 		JRadioButton_Gold.setActionCommand("Checkings");
+		JRadioButton_Gold.setSelected(true);
 		getContentPane().add(JRadioButton_Gold);
 		JRadioButton_Gold.setBounds(36,12,84,24);
 		JRadioButton_Silver.setText("Silver");
@@ -104,9 +105,6 @@ public class JDialog_AddCCAccount extends javax.swing.JDialog
 		//}}
 	}
 
-
-
-
 	//{{DECLARE_CONTROLS
 	javax.swing.JRadioButton JRadioButton_Gold = new javax.swing.JRadioButton();
 	javax.swing.JRadioButton JRadioButton_Silver = new javax.swing.JRadioButton();
@@ -132,10 +130,8 @@ public class JDialog_AddCCAccount extends javax.swing.JDialog
 	//}}
 
 
-	class SymMouse extends java.awt.event.MouseAdapter
-	{
-		public void mouseClicked(java.awt.event.MouseEvent event)
-		{
+	class SymMouse extends java.awt.event.MouseAdapter {
+		public void mouseClicked(java.awt.event.MouseEvent event) {
 			Object object = event.getSource();
 			if (object == JRadioButton_Gold)
 				JRadioButtonChk_mouseClicked(event);
@@ -143,8 +139,6 @@ public class JDialog_AddCCAccount extends javax.swing.JDialog
 				JRadioButtonSav_mouseClicked(event);
 			else if (object == JRadioButton_Bronze)
 				JRadioButtonBronze_mouseClicked(event);
-			
-			
 		}
 	}
 
@@ -162,51 +156,55 @@ public class JDialog_AddCCAccount extends javax.swing.JDialog
 		JRadioButton_Bronze.setSelected(false);
 	 
 	}
-	void JRadioButtonBronze_mouseClicked(java.awt.event.MouseEvent event)
-	{
+	void JRadioButtonBronze_mouseClicked(java.awt.event.MouseEvent event) {
 		JRadioButton_Gold.setSelected(false);
 		JRadioButton_Silver.setSelected(false);
 		JRadioButton_Bronze.setSelected(true);
-			 
 	}
 
-	class SymAction implements java.awt.event.ActionListener
-	{
-		public void actionPerformed(java.awt.event.ActionEvent event)
-		{
+	class SymAction implements java.awt.event.ActionListener {
+		public void actionPerformed(java.awt.event.ActionEvent event) {
 			Object object = event.getSource();
 			if (object == JButton_OK)
 				JButtonOK_actionPerformed(event);
 			else if (object == JButton_Cancel)
-				JButtonCalcel_actionPerformed(event);
+				JButtonCancel_actionPerformed(event);
 		}
 	}
 
-	void JButtonOK_actionPerformed(java.awt.event.ActionEvent event)
-	{
-       parentframe.clientName=JTextField_NAME.getText();
-       parentframe.street=JTextField_STR.getText();
-       parentframe.city=JTextField_CT.getText();
-       parentframe.zip=JTextField_ZIP.getText();
-       parentframe.state=JTextField_ST.getText();
-       parentframe.ccnumber=JTextField_CCNR.getText();
-       parentframe.expdate=JTextField_ExpDate.getText();
-       if (JRadioButton_Gold.isSelected())
-           parentframe.accountType="Gold";
-           else{
-            if (JRadioButton_Silver.isSelected())
-                parentframe.accountType="Silver";
-                else
-                parentframe.accountType="Bronze";
-           }
-           
-	   parentframe.newaccount=true;
-       dispose();
+	void JButtonOK_actionPerformed(java.awt.event.ActionEvent event) {
+		AccountService accountService = new AccountServiceImpl();
+		Address address = new Address(
+			JTextField_STR.getText(),
+			JTextField_CT.getText(),
+			JTextField_ST.getText(),
+			Integer.parseInt(JTextField_ZIP.getText())
+		);
+
+		Customer customer = new CompanyAccount(
+			JTextField_NAME.getText(),
+			JTextField_Email.getText(),
+			address
+		);
+
+		AccountType accountType = new BronzeAccount();
+		if(JRadioButton_Gold.isSelected())
+			accountType = new GoldAccount();
+		if(JRadioButton_Silver.isSelected())
+			accountType = new SilverAccount();
+
+		accountService.createAccount(
+			customer,
+			accountType,
+			0
+		);
+
+		dispose();
 	}
 
-	void JButtonCalcel_actionPerformed(java.awt.event.ActionEvent event)
+	void JButtonCancel_actionPerformed(java.awt.event.ActionEvent event)
 	{
     //make this frame invisible if Cancel button is clicked
-        dispose();
+		dispose();
 	}
 }
