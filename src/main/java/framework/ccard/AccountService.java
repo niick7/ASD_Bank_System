@@ -1,7 +1,7 @@
-package models;
+package framework.ccard;
 
 public interface AccountService {
-    Account createAccount(String accountNumber, AccountType accountType, Customer cust);
+    Account createAccount(Customer client, AccountType accountType, double balance);
     Account getAccount(String accountNumber);
     void deposit (String accountNumber, double amount);
     void withdraw (String accountNumber, double amount);
