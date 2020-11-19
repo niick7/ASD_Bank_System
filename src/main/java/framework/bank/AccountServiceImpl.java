@@ -1,7 +1,5 @@
 package framework.bank;
 
-
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,15 +47,11 @@ public class AccountServiceImpl implements AccountService {
         return account;
     }
 
-
-
     public void withdraw(String accountNumber, double amount) {
         Account account = accountDAO.getAccount(accountNumber);
         account.withdraw(amount);
         accountDAO.updateAccount(account);
     }
-
-
 
     public void transferFunds(String fromAccountNumber, String toAccountNumber, double amount, String description) {
         Account fromAccount = accountDAO.getAccount(fromAccountNumber);
@@ -78,10 +72,10 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public String generateReport(String ID) {
-        String result="";
+        String result = "";
         List<AccountEntry> List = new ArrayList<>();
         Account account = getAccount(ID);
-        List= account.getEntryList();
+        List = account.getEntryList();
         for(AccountEntry e: List){
             result+=(e.report()+ " \n");
         }
