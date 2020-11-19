@@ -4,14 +4,15 @@ public class Address {
     private String street;
     private String city;
     private String state;
-    private int zipCode;
+    private String  zipCode;
 
-    public Address(String street, String city, String state, int zipCode) {
+    public Address(String street, String city, String state, String zipCode) {
         this.street = street;
         this.city = city;
         this.state = state;
         this.zipCode = zipCode;
     }
+
 
     public String getStreet() {
         return street;
@@ -25,16 +26,17 @@ public class Address {
         return state;
     }
 
-    public int getZipCode() {
+
+    public String  getZipCode() {
         return zipCode;
     }
 
     @Override
     public String toString() {
-        return "Address{" +
+        return "com.my.project.yonas.CreditCard.Address{"+
                 ", street='" + street + '\'' +
                 ", city='" + city + '\'' +
-                ", state='" + state + '\'' +
+                ", state='" + state + '\''+
                 ", zipCode=" + zipCode +
                 '}';
     }

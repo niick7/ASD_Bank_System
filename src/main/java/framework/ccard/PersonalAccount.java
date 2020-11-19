@@ -3,31 +3,31 @@ package framework.ccard;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CompanyAccount implements Customer {
+public class PersonalAccount implements Customer {
     private String fullName;
     private String ID;
-    private String dateEstablished;
+    private String birthDate;
     private String email;
     private Address address;
     List<Account> myAccountList;
 
-    public CompanyAccount(String fullName,String ID, String email, Address address, String dateEstablished) {
+    public PersonalAccount(String fullName, String ID, String email, String birthDate, Address address) {
         this.fullName = fullName;
         this.ID = ID;
         this.email = email;
         this.address = address;
-        this.dateEstablished = dateEstablished;
+        this.birthDate = birthDate;
         myAccountList = new ArrayList<>();
     }
 
     @Override
     public String getFullName() {
-        return fullName;
+        return fullName ;
     }
 
     @Override
-    public String  getAge() {
-        return dateEstablished;
+    public String getAge() {
+        return birthDate;
     }
 
     @Override
@@ -50,9 +50,7 @@ public class CompanyAccount implements Customer {
         myAccountList.add(account);
     }
 
-
     @Override
     public void update() {
-
     }
 }

@@ -1,6 +1,7 @@
 package framework.ccard;
 
 import java.util.Collection;
+import java.util.List;
 
 public interface Account extends Observable {
     String getAccountName();
@@ -14,5 +15,5 @@ public interface Account extends Observable {
     void transferFunds(Account toAccount, double amount, String description);
     Customer getCustomer();
     void setCustomer(Customer customer);
-    Collection<AccountEntry> getEntryList();
+    List<AccountEntry> getEntryList();
 }

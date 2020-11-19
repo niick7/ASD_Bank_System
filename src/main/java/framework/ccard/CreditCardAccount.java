@@ -1,15 +1,13 @@
 package framework.ccard;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-
 
 public class CreditCardAccount implements  Account {
     private Customer customer;
     private double balance;
     private AccountType accountType;
-    private String accoutTypeName;
+    private String accountTypeName;
 
     private List<AccountEntry> entryList = new ArrayList<AccountEntry>();
 
@@ -17,11 +15,17 @@ public class CreditCardAccount implements  Account {
         this.customer = customer;
         this.accountType = accountType;
         this.balance = balance;
-        accoutTypeName = this.accountType.toString();
+        accountTypeName = this.accountType.toString();
+        customer.setAccount(this);
+    }
+    public CreditCardAccount(AccountType accountType, double balance){
+        this.accountType = accountType;
+        this.balance = balance;
+        accountTypeName = this.accountType.toString();
     }
 
     public String getAccountName() {
-        return accoutTypeName;
+        return accountTypeName;
     }
     public AccountType getAccountType(){
         return accountType;
@@ -30,10 +34,6 @@ public class CreditCardAccount implements  Account {
     public String getAccountID() {
         return customer.getID();
     }
-
-//    public void setAccountNumber(String accountNumber) {
-//        this.accountNumber = accountNumber;
-//    }
 
     public double getBalance() {
         double balance = 0;
@@ -44,16 +44,22 @@ public class CreditCardAccount implements  Account {
     }
 
     public void deposit(double amount) {
-        balance+=amount;
-        AccountEntry entry = new AccountEntry(amount, "deposit", "", "");
+        balance-=amount;
+        AccountEntry entry = new AccountEntry(-amount, "deposited / paid", "", "");
         entryList.add(entry);
-        notifyObserver();
+        if(!checker()){
+            notifyObserver();
+        }else personalRule(amount);
+
     }
 
     public void withdraw(double amount) {
-        AccountEntry entry = new AccountEntry(-amount, "withdraw", "", "");
+        balance+=amount;
+        AccountEntry entry = new AccountEntry(amount, "withdrawal / charged", "", "");
         entryList.add(entry);
-        notifyObserver();
+        if(!checker()){
+            notifyObserver();
+        }else personalRule(amount);
     }
 
     public void addEntry(AccountEntry entry) {
@@ -79,7 +85,7 @@ public class CreditCardAccount implements  Account {
         this.customer = customer;
     }
 
-    public Collection<AccountEntry> getEntryList() {
+    public List<AccountEntry> getEntryList() {
         return entryList;
     }
 
@@ -87,5 +93,22 @@ public class CreditCardAccount implements  Account {
     @Override
     public void notifyObserver() {
         customer.update();
+    }
+
+    private boolean checker(){
+        if(customer instanceof PersonalAccount){
+            return true;
+        }return false;
+    }
+
+    private boolean personalRule(double amount){
+        if(amount>400){
+            notifyObserver();
+            return true;
+        }else if(balance<0){
+            notifyObserver();
+            return true;
+        }
+        return false;
     }
 }
