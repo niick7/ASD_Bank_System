@@ -7,13 +7,7 @@ public abstract class TemplateToCreateAccount {
     private Customer customer;
     private AccountType accountType;
 
-
     AccountServiceImpl accountService;
-
-//    AccountGetter accountGetter = new AccountGetter();
-//    AccountDisplayer displayer;
-//    AccountDeposit accountDeposit;
-//    AccountWithdraw accountWithdraw;
 
     public TemplateToCreateAccount(AccountServiceImpl accountService) {
         this.accountService = accountService;

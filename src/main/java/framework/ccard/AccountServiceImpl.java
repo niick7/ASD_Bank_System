@@ -42,7 +42,6 @@ public class AccountServiceImpl implements AccountService {
         }
     }
 
-
     public Account getAccount(String accountID) {
         Account account = accountDAO.getAccount(accountID);
         return account;
