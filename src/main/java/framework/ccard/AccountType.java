@@ -12,4 +12,5 @@ public abstract class AccountType {
     abstract double getMonthlyInterest(double credit);
     abstract double getMonthlyMinimumPayment(double credit);
     abstract public String getAccountTypeName();
+
 }

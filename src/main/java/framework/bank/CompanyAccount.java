@@ -1,23 +1,23 @@
 package framework.bank;
 
-import java.time.LocalDate;
-import java.util.GregorianCalendar;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CompanyAccount implements Customer {
     private String fullName;
-    private LocalDate dateEstablished;
+    private String ID;
+    private String dateEstablished;
     private String email;
-    private int phoneNumber;
     private Address address;
+    List<Account> myAccountList;
 
-    public CompanyAccount(String fullName, String email, int phoneNumber,Address address, int yearEstablished, int monthEstablished, int dayEstablished) {
+    public CompanyAccount(String fullName, String ID, String email, Address address, String dateEstablished) {
         this.fullName = fullName;
+        this.ID = ID;
         this.email = email;
-        this.phoneNumber = phoneNumber;
         this.address = address;
-        GregorianCalendar gregorianCalendar = new GregorianCalendar();
-        gregorianCalendar.set(yearEstablished,monthEstablished-1,dayEstablished);
-        dateEstablished = gregorianCalendar.toZonedDateTime().toLocalDate();
+        this.dateEstablished = dateEstablished;
+        myAccountList = new ArrayList<>();
     }
 
     @Override
@@ -26,7 +26,7 @@ public class CompanyAccount implements Customer {
     }
 
     @Override
-    public LocalDate getAge() {
+    public String getAge() {
         return dateEstablished;
     }
 
@@ -35,14 +35,20 @@ public class CompanyAccount implements Customer {
         return email;
     }
 
+
     @Override
-    public int getPhoneNumber() {
-        return phoneNumber;
+    public Address getAddress() {
+        return address;
     }
 
     @Override
-    public String getAddress() {
-        return address.toString();
+    public String getID() {
+        return ID;
+    }
+
+    @Override
+    public void setAccount(Account account) {
+        myAccountList.add(account);
     }
 
 

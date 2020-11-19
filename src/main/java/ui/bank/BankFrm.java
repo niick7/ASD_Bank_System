@@ -1,10 +1,9 @@
 package ui.bank;
 
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.WindowEvent;
-import javax.swing.table.DefaultTableModel;
+
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 
 /**
  * A basic JFC based application.
@@ -14,7 +13,7 @@ public class BankFrm extends javax.swing.JFrame
     /****
      * init variables in the object
      ****/
-    String accountnr, clientName,street,city,zip,state,accountType,clientType,amountDeposit;
+    String accountnr, clientName,street,city,zip,state,accountType,clientType,amountDeposit,expdate,email, customerType;
     boolean newaccount;
     private DefaultTableModel model;
     private JTable JTable1;
@@ -205,15 +204,21 @@ public class BankFrm extends javax.swing.JFrame
 		JDialog_AddPAcc pac = new JDialog_AddPAcc(myframe);
 		pac.setBounds(450, 20, 300, 330);
 		pac.show();
+		System.out.println(accountnr + "P");
 
 		if (newaccount){
             // add row to table
-            rowdata[0] = accountnr;
-            rowdata[1] = clientName;
-            rowdata[2] = city;
-            rowdata[3] = "P";
+			customerType = "Personal";
+
+			String [] controller = Controller.createAccount(clientName,street,city,state,zip,email,accountnr,expdate,customerType,accountType);
+
+
+			rowdata[0] = controller[1];
+            rowdata[1] = controller[0];
+            rowdata[2] = controller[5];
+            rowdata[3] = customerType;
             rowdata[4] = accountType;
-            rowdata[5] = "0";
+            rowdata[5] = controller[4];
             model.addRow(rowdata);
             JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
             newaccount=false;
@@ -234,15 +239,20 @@ public class BankFrm extends javax.swing.JFrame
 		JDialog_AddCompAcc pac = new JDialog_AddCompAcc(myframe);
 		pac.setBounds(450, 20, 300, 330);
 		pac.show();
+		System.out.println(accountnr + "C");
 		
 		if (newaccount){
-            // add row to table
-            rowdata[0] = accountnr;
-            rowdata[1] = clientName;
-            rowdata[2] = city;
-            rowdata[3] = "C";
+			customerType = "Company";
+
+			String [] controller = Controller.createAccount(clientName,street,city,state,zip,email,accountnr,expdate,customerType,accountType);
+
+			// add row to table
+            rowdata[0] = controller[1];
+            rowdata[1] = controller[0];
+            rowdata[2] = controller[5];
+            rowdata[3] = customerType;
             rowdata[4] = accountType;
-            rowdata[5] = "0";
+            rowdata[5] = controller[4];
             model.addRow(rowdata);
             JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
             newaccount=false;
@@ -256,6 +266,7 @@ public class BankFrm extends javax.swing.JFrame
         int selection = JTable1.getSelectionModel().getMinSelectionIndex();
         if (selection >=0){
             String accnr = (String)model.getValueAt(selection, 0);
+			String CC = (String) model.getValueAt(selection,0);
     	    
 		    //Show the dialog for adding deposit amount for the current mane
 		    JDialog_Deposit dep = new JDialog_Deposit(myframe,accnr);
@@ -263,11 +274,10 @@ public class BankFrm extends javax.swing.JFrame
 		    dep.show();
     		
 		    // compute new amount
-            long deposit = Long.parseLong(amountDeposit);
-            String samount = (String)model.getValueAt(selection, 5);
-            long currentamount = Long.parseLong(samount);
-		    long newamount=currentamount+deposit;
-		    model.setValueAt(String.valueOf(newamount),selection, 5);
+			double amount = Double.parseDouble(amountDeposit);
+			double result = Controller.deposit(CC, amount);
+
+		    model.setValueAt(String.valueOf(result),selection, 5);
 		}
 		
 		
@@ -279,20 +289,22 @@ public class BankFrm extends javax.swing.JFrame
         int selection = JTable1.getSelectionModel().getMinSelectionIndex();
         if (selection >=0){
             String accnr = (String)model.getValueAt(selection, 0);
+			String CC = (String) model.getValueAt(selection,0);
 
-		    //Show the dialog for adding withdraw amount for the current mane
+
+			//Show the dialog for adding withdraw amount for the current mane
 		    JDialog_Withdraw wd = new JDialog_Withdraw(myframe,accnr);
 		    wd.setBounds(430, 15, 275, 140);
 		    wd.show();
     		
 		    // compute new amount
-            long deposit = Long.parseLong(amountDeposit);
-            String samount = (String)model.getValueAt(selection, 5);
-            long currentamount = Long.parseLong(samount);
-		    long newamount=currentamount-deposit;
-		    model.setValueAt(String.valueOf(newamount),selection, 5);
-		    if (newamount <0){
-		       JOptionPane.showMessageDialog(JButton_Withdraw, " Account "+accnr+" : balance is negative: $"+String.valueOf(newamount)+" !","Warning: negative balance",JOptionPane.WARNING_MESSAGE);
+
+			double amount = Double.parseDouble(amountDeposit);
+			double result = Controller.withdraw(CC, amount);
+
+		    model.setValueAt(String.valueOf(result),selection, 5);
+		    if (result <0){
+		       JOptionPane.showMessageDialog(JButton_Withdraw, " Account "+accnr+" : balance is negative: $"+String.valueOf(result)+" !","Warning: negative balance",JOptionPane.WARNING_MESSAGE);
 		    }
 		}
 		
@@ -301,7 +313,23 @@ public class BankFrm extends javax.swing.JFrame
 	
 	void JButtonAddinterest_actionPerformed(java.awt.event.ActionEvent event)
 	{
-		  JOptionPane.showMessageDialog(JButton_Addinterest, "Add interest to all accounts","Add interest to all accounts",JOptionPane.WARNING_MESSAGE);
-	    
+		int selection = JTable1.getSelectionModel().getMinSelectionIndex();
+		if (selection >= 0){
+			String name = (String) model.getValueAt(selection, 1);
+			String CC = (String) model.getValueAt(selection,0);
+			double balance = Double.parseDouble((String) model.getValueAt(selection, 5));
+			if (balance > 0) {
+				double result = Controller.addInterest(CC, 0);
+				JOptionPane.showMessageDialog(JButton_Withdraw, "Dear "+ name +", Your interest is calculated, and the current balance is $"+result+" !");
+				model.setValueAt(String.valueOf(result), selection, 5);
+			} else {
+//				JOptionPane.showMessageDialog(JButton_Withdraw, " "+ name +" You do not have loan in your account then your interest is 0.");
+				JOptionPane.showMessageDialog(JButton_Addinterest,  "Dear "+name + " ,you will not have an interest.\n your account balance is 0 or below 0", " no interest was calculated" ,JOptionPane.WARNING_MESSAGE);
+
+			}
+		}
+
+
+
 	}
 }

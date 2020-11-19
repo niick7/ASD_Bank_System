@@ -1,34 +1,33 @@
 package framework.bank;
 
-import java.time.LocalDate;
-import java.util.GregorianCalendar;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PersonalAccount implements Customer, Observer {
-    private String firstName;
-    private String lastName;
-    private LocalDate birthDate;
+    private String fullName;
+    private String ID;
+    private String birthDate;
     private String email;
-    private int phoneNumber;
     private Address address;
+    List<Account> myAccountList;
 
-    public PersonalAccount(String firstName, String lastName, String email, int phoneNumber,Address address, int yearBorn, int monthBorn, int dayBorn) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public PersonalAccount(String fullName, String ID, String email, String birthDate, Address address) {
+        this.fullName = fullName;
+        this.ID = ID;
         this.email = email;
-        this.phoneNumber = phoneNumber;
         this.address = address;
-        GregorianCalendar gregorianCalendar = new GregorianCalendar();
-        gregorianCalendar.set(yearBorn,monthBorn-1,dayBorn);
-        birthDate = gregorianCalendar.toZonedDateTime().toLocalDate();
+        this.birthDate = birthDate;
+        myAccountList = new ArrayList<>();
     }
 
     @Override
     public String getFullName() {
-        return firstName + " " + lastName;
+        return fullName;
     }
 
     @Override
-    public LocalDate getAge() {
+    public String getAge() {
         return birthDate;
     }
 
@@ -38,13 +37,18 @@ public class PersonalAccount implements Customer, Observer {
     }
 
     @Override
-    public int getPhoneNumber() {
-        return phoneNumber;
+    public Address getAddress() {
+        return address;
     }
 
     @Override
-    public String getAddress() {
-        return address.toString();
+    public String getID() {
+        return ID;
+    }
+
+    @Override
+    public void setAccount(Account account) {
+        myAccountList.add(account);
     }
 
     @Override

@@ -1,12 +1,11 @@
 package framework.bank;
 
-import java.util.Collection;
+import java.util.List;
 
 public interface Account extends Observable {
     String getAccountName();
     AccountType getAccountType();
-    String getAccountNumber();
-    void setAccountNumber(String accountNumber);
+    String getAccountID();
     double getBalance();
     void deposit(double amount);
     void withdraw(double amount);
@@ -14,5 +13,6 @@ public interface Account extends Observable {
     void transferFunds(Account toAccount, double amount, String description);
     Customer getCustomer();
     void setCustomer(Customer customer);
-    Collection<AccountEntry> getEntryList();
+    List<AccountEntry> getEntryList();
+
 }

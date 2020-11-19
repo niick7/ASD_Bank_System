@@ -18,11 +18,6 @@ public class CreditCardAccount implements  Account {
         accountTypeName = this.accountType.toString();
         customer.setAccount(this);
     }
-    public CreditCardAccount(AccountType accountType, double balance){
-        this.accountType = accountType;
-        this.balance = balance;
-        accountTypeName = this.accountType.toString();
-    }
 
     public String getAccountName() {
         return accountTypeName;

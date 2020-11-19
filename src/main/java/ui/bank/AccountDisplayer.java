@@ -1,6 +1,7 @@
-package ui.ccard;
+package ui.bank;
 
-import framework.ccard.*;
+import framework.bank.Account;
+import framework.bank.PersonalAccount;
 
 public class AccountDisplayer {
     Account account;

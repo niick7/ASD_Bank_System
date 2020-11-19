@@ -1,6 +1,5 @@
 package framework.ccard;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,9 +24,10 @@ public class AccountServiceImpl implements AccountService {
             accountDAO.addAccount(customer.getID(),account);
             return account;
         }else {
-            Account account = new CreditCardAccount(accountType,0);
-            customer.setAccount(account);
-            accountDAO.addAccount(customer.getID(),account);
+            Customer a = getAccount(customer.getID()).getCustomer();
+            Account account = new CreditCardAccount(a,accountType,0);
+            a.setAccount(account);
+            accountDAO.addAccount(a.getID(),account);
             return account;
         }
     }
@@ -41,6 +41,7 @@ public class AccountServiceImpl implements AccountService {
             accountDAO.updateAccount(account);
         }
     }
+
 
     public Account getAccount(String accountID) {
         Account account = accountDAO.getAccount(accountID);

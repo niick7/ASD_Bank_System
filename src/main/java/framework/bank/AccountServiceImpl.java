@@ -1,27 +1,46 @@
 package framework.bank;
 
+
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class AccountServiceImpl implements AccountService {
     private AccountDAO accountDAO;
 
-    public AccountServiceImpl(){
+    private AccountServiceImpl(){
         accountDAO = new BankingAccountDAO();
     }
+    private final static AccountServiceImpl accountService = new AccountServiceImpl();
 
-    public Account createAccount(String accountNumber, AccountType accountType, Customer cust) {
-        Account account = new BankingAccount(accountNumber, accountType);
-        Customer customer = cust;
-        account.setCustomer(customer);
+    public static AccountServiceImpl myAccountService(){
+        return accountService;
+    }
 
-        accountDAO.addAccount(accountNumber,account);
+    public Account createAccount(Customer client, AccountType accountType) {
+        Customer customer = client;
+        if(!accountDAO.findAccount(customer.getID())){
+            Account account = new BankingAccount(customer,accountType,0);
 
-        return account;
+            accountDAO.addAccount(customer.getID(),account);
+            return account;
+        }else {
+            Customer a = getAccount(customer.getID()).getCustomer();
+            Account account = new BankingAccount(a,accountType,0);
+            a.setAccount(account);
+            accountDAO.addAccount(a.getID(),account);
+            return account;
+        }
     }
 
     public void deposit(String accountNumber, double amount) {
         Account account = accountDAO.getAccount(accountNumber);
-        account.deposit(amount);
-
-        accountDAO.updateAccount(account);
+        if(account==null){
+            System.out.println("no account with this ID");
+        }else {
+            account.deposit(amount);
+            accountDAO.updateAccount(account);
+        }
     }
 
 
@@ -56,4 +75,17 @@ public class AccountServiceImpl implements AccountService {
 //        System.out.println("this is your interest: " + interest);
         deposit(accountNumber,interest);
     }
+
+    @Override
+    public String generateReport(String ID) {
+        String result="";
+        List<AccountEntry> List = new ArrayList<>();
+        Account account = getAccount(ID);
+        List= account.getEntryList();
+        for(AccountEntry e: List){
+            result+=(e.report()+ " \n");
+        }
+        return result;
+    }
+
 }

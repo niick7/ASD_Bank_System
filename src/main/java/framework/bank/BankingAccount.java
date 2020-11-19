@@ -1,21 +1,23 @@
 package framework.bank;
 
+
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class BankingAccount implements Account {
     private Customer customer;
-    private String accountNumber;
+    private double balance;
     private AccountType accountType;
     private String accoutTypeName;
 
     private List<AccountEntry> entryList = new ArrayList<AccountEntry>();
 
-    public BankingAccount(String accountNumber, AccountType accountType) {
-        this.accountNumber = accountNumber;
+    public BankingAccount(Customer customer, AccountType accountType, double balance) {
+        this.customer = customer;
         this.accountType = accountType;
-        accoutTypeName = this.accountType.toString();
+        this.balance = balance;
+        this.accoutTypeName = this.accountType.toString();
+        customer.setAccount(this);
     }
 
     public String getAccountName() {
@@ -25,13 +27,10 @@ public class BankingAccount implements Account {
         return accountType;
     }
 
-    public String getAccountNumber() {
-        return accountNumber;
+    public String getAccountID() {
+        return customer.getID();
     }
 
-    public void setAccountNumber(String accountNumber) {
-        this.accountNumber = accountNumber;
-    }
 
     public double getBalance() {
         double balance = 0;
@@ -42,13 +41,21 @@ public class BankingAccount implements Account {
     }
 
     public void deposit(double amount) {
+        balance+=amount;
         AccountEntry entry = new AccountEntry(amount, "deposit", "", "");
         entryList.add(entry);
+        if(!checker()){
+            notifyObserver();
+        }else personalRule(amount);
     }
 
     public void withdraw(double amount) {
+        balance-=amount;
         AccountEntry entry = new AccountEntry(-amount, "withdraw", "", "");
         entryList.add(entry);
+        if(!checker()){
+            notifyObserver();
+        }else personalRule(amount);
     }
 
     public void addEntry(AccountEntry entry) {
@@ -56,9 +63,9 @@ public class BankingAccount implements Account {
     }
 
     public void transferFunds(Account toAccount, double amount, String description) {
-        AccountEntry fromEntry = new AccountEntry(-amount, description, toAccount.getAccountNumber(),
+        AccountEntry fromEntry = new AccountEntry(-amount, description, toAccount.getAccountID(),
                 toAccount.getCustomer().getFullName());
-        AccountEntry toEntry = new AccountEntry(amount, description, toAccount.getAccountNumber(),
+        AccountEntry toEntry = new AccountEntry(amount, description, toAccount.getAccountID(),
                 toAccount.getCustomer().getFullName());
 
         entryList.add(fromEntry);
@@ -74,7 +81,7 @@ public class BankingAccount implements Account {
         this.customer = customer;
     }
 
-    public Collection<AccountEntry> getEntryList() {
+    public List<AccountEntry> getEntryList() {
         return entryList;
     }
 
@@ -83,4 +90,22 @@ public class BankingAccount implements Account {
     public void notifyObserver() {
 
     }
+
+    private boolean checker(){
+        if(customer instanceof PersonalAccount){
+            return true;
+        }return false;
+    }
+
+    private boolean personalRule(double amount){
+        if(amount>400){
+            notifyObserver();
+            return true;
+        }else if(balance<0){
+            notifyObserver();
+            return true;
+        }
+        return false;
+    }
+
 }

@@ -1,6 +1,4 @@
 package ui.bank;
-import java.awt.*;
-import javax.swing.*;
 
 
 
@@ -91,6 +89,7 @@ public class JDialog_AddCompAcc extends javax.swing.JDialog
 		//}}
 	
 		//{{REGISTER_LISTENERS
+
 		SymAction lSymAction = new SymAction();
 		JButton_OK.addActionListener(lSymAction);
 		JButton_Calcel.addActionListener(lSymAction);
@@ -143,9 +142,9 @@ public class JDialog_AddCompAcc extends javax.swing.JDialog
        parentframe.zip=JTextField_ZIP.getText();
        parentframe.state=JTextField_ST.getText();
        if (JRadioButton_Chk.isSelected())
-           parentframe.accountType="Ch";
+           parentframe.accountType="Checking";
            else
-           parentframe.accountType="S";
+           parentframe.accountType="Saving";
 	   parentframe.newaccount=true;
 	   dispose();
 			 

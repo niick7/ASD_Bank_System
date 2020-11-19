@@ -1,24 +1,16 @@
 package framework.bank;
 
 public class Address {
-    private String houseNumber;
     private String street;
     private String city;
     private String state;
-    private String Country;
-    private int zipCode;
+    private String  zipCode;
 
-    public Address(String houseNumber, String street, String city, String state, String country, int zipCode) {
-        this.houseNumber = houseNumber;
+    public Address(String street, String city, String state, String zipCode) {
         this.street = street;
         this.city = city;
         this.state = state;
-        Country = country;
         this.zipCode = zipCode;
-    }
-
-    public String getHouseNumber() {
-        return houseNumber;
     }
 
     public String getStreet() {
@@ -33,22 +25,16 @@ public class Address {
         return state;
     }
 
-    public String getCountry() {
-        return Country;
-    }
-
-    public int getZipCode() {
+    public String  getZipCode() {
         return zipCode;
     }
 
     @Override
     public String toString() {
-        return "Address{" +
-                "houseNumber='" + houseNumber + '\'' +
+        return "Address{"+
                 ", street='" + street + '\'' +
                 ", city='" + city + '\'' +
-                ", state='" + state + '\'' +
-                ", Country='" + Country + '\'' +
+                ", state='" + state + '\''+
                 ", zipCode=" + zipCode +
                 '}';
     }

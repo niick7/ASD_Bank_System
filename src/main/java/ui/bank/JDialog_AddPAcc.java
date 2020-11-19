@@ -3,9 +3,6 @@ package ui.bank;
 		A basic implementation of the JDialog class.
 */
 
-import java.awt.*;
-import javax.swing.*;
-
 public class JDialog_AddPAcc extends javax.swing.JDialog
 {
     private BankFrm parentframe;
@@ -134,10 +131,14 @@ public class JDialog_AddPAcc extends javax.swing.JDialog
 		public void mouseClicked(java.awt.event.MouseEvent event)
 		{
 			Object object = event.getSource();
-			if (object == JRadioButton_Chk)
+			if (object == JRadioButton_Chk){
 				JRadioButtonChk_mouseClicked(event);
-			else if (object == JRadioButton_Sav)
+				parentframe.accountType="checking";
+			} else if (object == JRadioButton_Sav){
 				JRadioButtonSav_mouseClicked(event);
+				parentframe.accountType="saving";
+			}
+
 		}
 	}
 
@@ -146,6 +147,7 @@ public class JDialog_AddPAcc extends javax.swing.JDialog
 		//When Checking radio is clicked make this radio on 
 		//and make Saving account radio off
 		JRadioButton_Chk.setSelected(true);
+		parentframe.accountType="checking";
 		JRadioButton_Sav.setSelected(false);
 	}
 
@@ -155,6 +157,7 @@ public class JDialog_AddPAcc extends javax.swing.JDialog
 		//and make Checking account radio off
 		JRadioButton_Chk.setSelected(false);
 		JRadioButton_Sav.setSelected(true);
+		parentframe.accountType="saving";
 	 
 	}
 
@@ -178,6 +181,9 @@ public class JDialog_AddPAcc extends javax.swing.JDialog
        parentframe.city=JTextField_CT.getText();
        parentframe.zip=JTextField_ZIP.getText();
        parentframe.state=JTextField_ST.getText();
+       parentframe.email=JTextField_EM.getText();
+       parentframe.expdate=JTextField_BD.getText();
+//       parentframe.expdate=JTe
        if (JRadioButton_Chk.isSelected())
            parentframe.accountType="Ch";
            else

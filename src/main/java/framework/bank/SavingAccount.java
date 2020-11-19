@@ -11,7 +11,8 @@ public class SavingAccount implements AccountType {
     }
 
     @Override
-    public String toString() {
+    public String getAccountTypeName() {
         return "SavingAccount";
     }
+
 }

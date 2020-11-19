@@ -36,8 +36,8 @@ public class PersonalAccount implements Customer {
     }
 
     @Override
-    public String getAddress() {
-        return address.toString();
+    public Address getAddress() {
+        return address;
     }
 
     @Override

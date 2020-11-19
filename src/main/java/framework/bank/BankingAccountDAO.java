@@ -29,9 +29,9 @@ public class BankingAccountDAO implements AccountDAO {
     }
     public boolean updateAccount(Account account){
         if(null == account) return false;
-        if(findAccount(account.getAccountNumber())){
-            bankingAccountMap.remove(account.getAccountNumber());
-            bankingAccountMap.put(account.getAccountNumber(),account);
+        if(findAccount(account.getAccountID())){
+            bankingAccountMap.remove(account.getAccountID());
+            bankingAccountMap.put(account.getAccountID(),account);
             return true;
         }return false;
     }

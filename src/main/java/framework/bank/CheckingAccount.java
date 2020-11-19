@@ -9,7 +9,8 @@ public class CheckingAccount implements AccountType {
     }
 
     @Override
-    public String toString() {
+    public String getAccountTypeName() {
         return "CheckingAccount";
     }
+
 }

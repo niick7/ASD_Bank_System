@@ -1,5 +1,7 @@
 package framework.ccard;
 
+import framework.ccard.AccountType;
+
 public class BronzeAccount extends AccountType {
 
     @Override

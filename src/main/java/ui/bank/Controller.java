@@ -1,6 +1,8 @@
-package framework.ccard;
+package ui.bank;
 
-import ui.ccard.*;
+import framework.bank.AccountServiceImpl;
+
+
 
 public class Controller {
     public static AccountServiceImpl accountService = AccountServiceImpl.myAccountService();
@@ -12,12 +14,16 @@ public class Controller {
 
     public static String[] createAccount(String name,String street,String city,String state,String zip,String email,String ID,String dateOfBirth, String customerType,String accountType){
         displayer = new AccountDisplayer(templateToCreateAccount.create(name,street,city,state,zip,email,ID,dateOfBirth, customerType,accountType));
-        String[] result = new String[5];
+        String[] result = new String[6];
         result[0] = displayer.getName();
         result[1] = displayer.getID();
         result[2] = displayer.getCustomerType();
         result[3] = displayer.getAccountType();
         result[4] = String.valueOf(displayer.getBalance());
+        result[5] = displayer.getCity();
+        System.out.println(displayer.getID());
+        System.out.println(result[1]+ " hi");
+        System.out.println(ID);
 
         return result;
     }
@@ -40,4 +46,5 @@ public class Controller {
     public static String generateReport(String ID){
         return accountService.generateReport(ID);
     }
+
 }

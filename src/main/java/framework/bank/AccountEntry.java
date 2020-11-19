@@ -61,4 +61,14 @@ public class AccountEntry {
         this.fromPersonName = fromPersonName;
     }
 
+    public String report() {
+        return "AccountEntry{" +
+                "date=" + date +
+                ", amount=" + amount +
+                ", description='" + description + '\'' +
+                ", fromAccountNumber='" + fromAccountNumber + '\'' +
+                ", fromPersonName='" + fromPersonName + '\'' +
+                '}' + '\n';
+    }
+
 }
