@@ -225,7 +225,7 @@ public class CardFrm extends javax.swing.JFrame
                 JOptionPane.showMessageDialog(JButton_Withdraw, " "+ name +" Your interest is calculated, and the current balance is $"+result+" !");
                 model.setValueAt(String.valueOf(result), selection, 4);
             } else {
-                JOptionPane.showMessageDialog(JButton_Withdraw, " "+ name +" You do not have loan in your account then your interest is 0.");
+                JOptionPane.showMessageDialog(JButton_Withdraw, "Dear "+ name +". Your balance should be greater than 0 to add interest.");
             }
         }
     }
@@ -266,7 +266,7 @@ public class CardFrm extends javax.swing.JFrame
             double result = Controller.withdraw(CC, amount);
             model.setValueAt(String.valueOf(result), selection, 4);
             if (result < 0){
-                JOptionPane.showMessageDialog(JButton_Withdraw, " "+name+" Your balance is negative: $"+String.valueOf(result)+" !","Warning: negative balance",JOptionPane.WARNING_MESSAGE);
+//                JOptionPane.showMessageDialog(JButton_Withdraw, " "+name+" Your balance is negative: $"+String.valueOf(result)+" !","Warning: negative balance",JOptionPane.WARNING_MESSAGE);
             }
         }
     }

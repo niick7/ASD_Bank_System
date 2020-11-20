@@ -5,11 +5,11 @@ import framework.Common.AccountType;
 public class GoldAccount implements AccountType {
 
     private double getMonthlyInterest(double credit) {
-        return credit * 0.08;
+        return credit * 0.06;
     }
 
     private double getMonthlyMinimumPayment(double credit) {
-        return credit * 0.12;
+        return credit * 0.1;
     }
 
     @Override
