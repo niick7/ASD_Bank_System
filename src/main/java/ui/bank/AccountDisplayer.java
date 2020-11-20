@@ -1,6 +1,6 @@
 package ui.bank;
 
-import framework.bank.Account;
+import framework.Common.Account;
 import framework.bank.PersonalAccount;
 
 public class AccountDisplayer {
@@ -13,8 +13,8 @@ public class AccountDisplayer {
     public String getName(){
         return account.getCustomer().getFullName();
     }
-    public String getID(){
-        return account.getAccountID();
+    public String getAccountNumber(){
+        return account.getAccountNumber();
     }
     public String getCustomerType(){
         if(account.getCustomer() instanceof PersonalAccount) return "Personal Account";

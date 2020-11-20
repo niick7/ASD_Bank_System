@@ -1,6 +1,6 @@
-package framework.bank;
+package framework.Common;
 
 public interface AccountType {
-    double AddInterest(double balance);
+    double[] execute(double credit);
     String getAccountTypeName();
 }

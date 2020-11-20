@@ -1,5 +1,8 @@
 package framework.bank;
 
+import framework.Common.Account;
+import framework.Common.AccountDAO;
+
 import java.util.HashMap;
 
 public class BankingAccountDAO implements AccountDAO {
@@ -16,8 +19,8 @@ public class BankingAccountDAO implements AccountDAO {
         return false;
     }
     public void addAccount(String accountNumber, Account account){
-        if(!findAccount(accountNumber)){
-            bankingAccountMap.put(accountNumber,account);
+        if(!findAccount(account.getAccountNumber())){
+            bankingAccountMap.put(account.getAccountNumber(),account);
         }
     }
 
@@ -29,9 +32,9 @@ public class BankingAccountDAO implements AccountDAO {
     }
     public boolean updateAccount(Account account){
         if(null == account) return false;
-        if(findAccount(account.getAccountID())){
-            bankingAccountMap.remove(account.getAccountID());
-            bankingAccountMap.put(account.getAccountID(),account);
+        if(findAccount(account.getAccountNumber())){
+            bankingAccountMap.remove(account.getAccountNumber());
+            bankingAccountMap.put(account.getAccountNumber(),account);
             return true;
         }return false;
     }

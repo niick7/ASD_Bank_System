@@ -1,8 +1,7 @@
 package ui.bank;
 
 import framework.bank.AccountServiceImpl;
-
-
+import framework.bank.BCodeGenerator;
 
 public class Controller {
     public static AccountServiceImpl accountService = AccountServiceImpl.myAccountService();
@@ -11,19 +10,21 @@ public class Controller {
     public static AccountDeposit accountDeposit;
     public static AccountWithdraw accountWithdraw;
     public static AddInterest addInterest;
+    public static BCodeGenerator accountNumberGenerator = BCodeGenerator.myAccountGenerator();
 
     public static String[] createAccount(String name,String street,String city,String state,String zip,String email,String ID,String dateOfBirth, String customerType,String accountType){
-        displayer = new AccountDisplayer(templateToCreateAccount.create(name,street,city,state,zip,email,ID,dateOfBirth, customerType,accountType));
+        String code= accountNumberGenerator.generateCode();
+        displayer = new AccountDisplayer(templateToCreateAccount.create(name,street,city,state,zip,email,ID,dateOfBirth, customerType,accountType,code));
+
         String[] result = new String[6];
         result[0] = displayer.getName();
-        result[1] = displayer.getID();
+        result[1] = displayer.getAccountNumber();
         result[2] = displayer.getCustomerType();
         result[3] = displayer.getAccountType();
         result[4] = String.valueOf(displayer.getBalance());
         result[5] = displayer.getCity();
-        System.out.println(displayer.getID());
-        System.out.println(result[1]+ " hi");
-        System.out.println(ID);
+        System.out.println(displayer.getAccountNumber());
+
 
         return result;
     }

@@ -1,7 +1,7 @@
-package framework.ccard;
+package framework.Common;
 
 public interface AccountService {
-    Account createAccount(Customer client, AccountType accountType);
+    Account createAccount(Customer client, AccountType accountType, String accountNumber);
     Account getAccount(String accountNumber);
     void deposit (String accountNumber, double amount);
     void withdraw (String accountNumber, double amount);

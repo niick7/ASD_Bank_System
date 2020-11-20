@@ -1,5 +1,9 @@
 package framework.ccard;
 
+import framework.Common.Account;
+import framework.Common.Address;
+import framework.Common.Customer;
+
 import java.util.ArrayList;
 import java.util.List;
 

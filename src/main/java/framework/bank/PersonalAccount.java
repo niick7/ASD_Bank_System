@@ -1,6 +1,11 @@
 package framework.bank;
 
 
+import framework.Common.Account;
+import framework.Common.Address;
+import framework.Common.Customer;
+import framework.Common.Observer;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,6 +58,9 @@ public class PersonalAccount implements Customer, Observer {
 
     @Override
     public void update() {
+//        setNotificationType(new EmailNotification());
+//
+//        getNotificationType().send(this.email,message);
 
     }
 }

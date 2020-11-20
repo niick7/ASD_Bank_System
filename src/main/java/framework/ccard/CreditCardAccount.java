@@ -1,21 +1,29 @@
 package framework.ccard;
 
+import framework.Common.Account;
+import framework.Common.AccountEntry;
+import framework.Common.AccountType;
+import framework.Common.Customer;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CreditCardAccount implements  Account {
+public class CreditCardAccount implements Account {
     private Customer customer;
     private double balance;
     private AccountType accountType;
     private String accountTypeName;
+    private String accountNumber;
 
     private List<AccountEntry> entryList = new ArrayList<AccountEntry>();
 
-    public CreditCardAccount(Customer customer, AccountType accountType, double balance) {
+    public CreditCardAccount(Customer customer, AccountType accountType, double balance, String accountNumber) {
         this.customer = customer;
         this.accountType = accountType;
         this.balance = balance;
         accountTypeName = this.accountType.toString();
+        this.accountNumber = accountNumber;
         customer.setAccount(this);
     }
 
@@ -28,6 +36,11 @@ public class CreditCardAccount implements  Account {
 
     public String getAccountID() {
         return customer.getID();
+    }
+
+    @Override
+    public String getAccountNumber() {
+        return accountNumber;
     }
 
     public double getBalance() {
@@ -82,6 +95,47 @@ public class CreditCardAccount implements  Account {
 
     public List<AccountEntry> getEntryList() {
         return entryList;
+    }
+
+
+    public String generateBill(){
+        LocalDate localDate = LocalDate.now();
+        int thisMonth = localDate.getMonth().getValue() -1;
+        double previousBalance=0;
+        double totalCharegesOfThiMonth=0;
+        double totalPaymentOfThisMonth=0;
+
+        for(AccountEntry a: entryList){
+            if(a.getDate().getMonth()<thisMonth){
+                previousBalance+=a.getAmount();
+            }else if (a.getDate().getMonth()==thisMonth){
+                if(a.getAmount()>0) totalCharegesOfThiMonth+=a.getAmount();
+                else totalPaymentOfThisMonth+=a.getAmount();
+            }
+        }
+        double[] fromAccountType = new double[2];
+        fromAccountType[0] =0;
+        fromAccountType[1] =0;
+        if(previousBalance>0){
+            fromAccountType = accountType.execute(previousBalance -totalPaymentOfThisMonth);
+        }
+        double newBalance=0;
+        if(previousBalance!=0){
+            newBalance = previousBalance-totalPaymentOfThisMonth+totalCharegesOfThiMonth + fromAccountType[0];
+        }else {
+            newBalance = totalPaymentOfThisMonth+totalCharegesOfThiMonth + fromAccountType[0];
+
+        }
+        double totalDue = fromAccountType[1];
+
+
+        return  "Credit card bill{ \n" +
+                "your previous month balance is: "+previousBalance+
+                "\nyour total charge / utilized amount: " + totalCharegesOfThiMonth+
+                "\nyour total payment / deposit of this month: " +totalPaymentOfThisMonth+
+                "\nyour new balance:"+ newBalance+
+                "\nyour total due or minimum payment: " + totalDue +"  }";
+
     }
 
 

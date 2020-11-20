@@ -1,11 +1,13 @@
-package framework.bank;
+package framework.Common;
 
 import java.util.List;
 
-public interface Account extends Observable {
+public interface Account extends Observable{
     String getAccountName();
     AccountType getAccountType();
     String getAccountID();
+    String getAccountNumber();
+    //    void setAccountNumber(String accountNumber);
     double getBalance();
     void deposit(double amount);
     void withdraw(double amount);
@@ -14,5 +16,5 @@ public interface Account extends Observable {
     Customer getCustomer();
     void setCustomer(Customer customer);
     List<AccountEntry> getEntryList();
-
+    String generateBill();
 }

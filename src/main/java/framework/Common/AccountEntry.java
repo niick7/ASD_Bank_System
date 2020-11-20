@@ -1,4 +1,4 @@
-package framework.bank;
+package framework.Common;
 
 import java.util.Date;
 
@@ -70,5 +70,4 @@ public class AccountEntry {
                 ", fromPersonName='" + fromPersonName + '\'' +
                 '}' + '\n';
     }
-
 }

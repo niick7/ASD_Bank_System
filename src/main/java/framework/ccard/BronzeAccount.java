@@ -1,17 +1,23 @@
 package framework.ccard;
 
-import framework.ccard.AccountType;
+import framework.Common.AccountType;
 
-public class BronzeAccount extends AccountType {
+public class BronzeAccount implements AccountType {
 
-    @Override
-    double getMonthlyInterest(double credit) {
-        return credit * 0.1;
+    private double getMonthlyInterest(double credit) {
+        return credit * 0.08;
+    }
+
+    private double getMonthlyMinimumPayment(double credit) {
+        return credit * 0.12;
     }
 
     @Override
-    double getMonthlyMinimumPayment(double credit) {
-        return credit * 0.14;
+    public double[] execute(double credit) {
+        double[] a = new double[2];
+        a[0] = getMonthlyInterest(credit);
+        a[1] = getMonthlyMinimumPayment(credit);
+        return a;
     }
 
     @Override

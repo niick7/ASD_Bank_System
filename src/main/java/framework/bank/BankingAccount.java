@@ -1,6 +1,11 @@
 package framework.bank;
 
 
+import framework.Common.Account;
+import framework.Common.AccountEntry;
+import framework.Common.AccountType;
+import framework.Common.Customer;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,15 +14,17 @@ public class BankingAccount implements Account {
     private double balance;
     private AccountType accountType;
     private String accoutTypeName;
+    private String accountNumber;
 
     private List<AccountEntry> entryList = new ArrayList<AccountEntry>();
 
-    public BankingAccount(Customer customer, AccountType accountType, double balance) {
+    public BankingAccount(Customer customer, AccountType accountType, double balance,String accountNumber) {
         this.customer = customer;
         this.accountType = accountType;
         this.balance = balance;
         this.accoutTypeName = this.accountType.toString();
         customer.setAccount(this);
+        this.accountNumber=accountNumber;
     }
 
     public String getAccountName() {
@@ -29,6 +36,11 @@ public class BankingAccount implements Account {
 
     public String getAccountID() {
         return customer.getID();
+    }
+
+    @Override
+    public String getAccountNumber() {
+        return accountNumber;
     }
 
 
@@ -83,6 +95,11 @@ public class BankingAccount implements Account {
 
     public List<AccountEntry> getEntryList() {
         return entryList;
+    }
+
+    @Override
+    public String generateBill() {
+        return null;
     }
 
 

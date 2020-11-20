@@ -50,4 +50,3 @@ public class JDialogGenBill extends javax.swing.JDialog {
         dispose();
     }
 }
-

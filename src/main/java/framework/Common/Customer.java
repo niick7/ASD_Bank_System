@@ -1,4 +1,4 @@
-package framework.ccard;
+package framework.Common;
 
 public interface Customer extends Observer {
     String getFullName();

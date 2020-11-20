@@ -266,7 +266,7 @@ public class CardFrm extends javax.swing.JFrame
             double result = Controller.withdraw(CC, amount);
             model.setValueAt(String.valueOf(result), selection, 4);
             if (result < 0){
-//                JOptionPane.showMessageDialog(JButton_Withdraw, " "+name+" Your balance is negative: $"+String.valueOf(result)+" !","Warning: negative balance",JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(JButton_Withdraw, " "+name+" Your balance is negative: $"+String.valueOf(result)+" !","Warning: negative balance",JOptionPane.WARNING_MESSAGE);
             }
         }
     }

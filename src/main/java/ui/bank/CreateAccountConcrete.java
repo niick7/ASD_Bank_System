@@ -1,5 +1,9 @@
 package ui.bank;
 
+import framework.Common.Account;
+import framework.Common.AccountType;
+import framework.Common.Address;
+import framework.Common.Customer;
 import framework.bank.*;
 
 public class CreateAccountConcrete extends TemplateToCreateAccount {
@@ -27,7 +31,7 @@ public class CreateAccountConcrete extends TemplateToCreateAccount {
     }
 
     @Override
-    Account createAccount(Customer customer, AccountType accountType) {
-        return accountService.createAccount(customer,accountType);
+    Account createAccount(Customer customer, AccountType accountType, String accountNumber) {
+        return accountService.createAccount(customer,accountType,accountNumber);
     }
 }

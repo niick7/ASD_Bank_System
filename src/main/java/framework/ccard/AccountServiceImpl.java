@@ -1,13 +1,14 @@
 package framework.ccard;
 
-import java.util.ArrayList;
-import java.util.List;
+import framework.Common.*;
 
 public class AccountServiceImpl implements AccountService {
     private AccountDAO accountDAO;
+    private CustomerDAO customerDAO;
 
     private AccountServiceImpl(){
         accountDAO = new CreditCardAccountDAO();
+        customerDAO = new CreditCustomerDAO();
     }
 
     private final static AccountServiceImpl accountService = new AccountServiceImpl();
@@ -16,24 +17,25 @@ public class AccountServiceImpl implements AccountService {
         return accountService;
     }
 
-    public Account createAccount(Customer client, AccountType accountType) {
-        Customer customer = client;
-        if(!accountDAO.findAccount(customer.getID())){
-            Account account = new CreditCardAccount(customer,accountType,0);
+    public Account createAccount(Customer client, AccountType accountType, String accountNumber) {
 
-            accountDAO.addAccount(customer.getID(),account);
+        if(!customerDAO.findCustomer(client)){
+            Account account = new CreditCardAccount(client,accountType,0,accountNumber);
+            accountDAO.addAccount(account.getAccountNumber(),account);
+            customerDAO.addCustomer(client);
             return account;
         }else {
-            Customer a = getAccount(customer.getID()).getCustomer();
-            Account account = new CreditCardAccount(a,accountType,0);
+            Customer a = customerDAO.getCustomer(client);
+            Account account = new CreditCardAccount(a,accountType,0,accountNumber);
             a.setAccount(account);
-            accountDAO.addAccount(a.getID(),account);
+            customerDAO.updateCustomer(a);
+            accountDAO.addAccount(account.getAccountNumber(),account);
             return account;
         }
     }
 
-    public void deposit(String accountID, double amount) {
-        Account account = accountDAO.getAccount(accountID);
+    public void deposit(String accountNumber, double amount) {
+        Account account = accountDAO.getAccount(accountNumber);
         if(account==null){
             System.out.println("no account with this ID");
         }else {
@@ -43,9 +45,8 @@ public class AccountServiceImpl implements AccountService {
     }
 
 
-    public Account getAccount(String accountID) {
-        Account account = accountDAO.getAccount(accountID);
-        return account;
+    public Account getAccount(String accountNumber) {
+        return accountDAO.getAccount(accountNumber);
     }
 
     public void withdraw(String accountNumber, double amount) {
@@ -63,27 +64,28 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void addInterest(String accountID) {
+    public void addInterest(String accountNumber) {
         double interest = 0;
         double minimumPayment = 0;
-        Account account = getAccount(accountID);
+        Account account = getAccount(accountNumber);
         double[] collector = account.getAccountType().execute(account.getBalance());
         interest = Math.floor(collector[0] * 100) / 100;;
-        minimumPayment = Math.floor(collector[1] * 100) / 100;
+        minimumPayment = collector[1];
         System.out.println("This is your interest: " + interest);
         System.out.println("This is your minimumPayment: " + minimumPayment);
-        withdraw(accountID, interest);
+        withdraw(accountNumber, interest);
     }
 
     @Override
-    public String generateReport(String ID) {
-        String result="";
-        List<AccountEntry> List = new ArrayList<>();
-        Account account = getAccount(ID);
-        List= account.getEntryList();
-        for(AccountEntry e: List){
-            result+=(e.report()+ " \n");
-        }
-        return result;
+    public String generateReport(String accountNumber) {
+//        String result="";
+//        List<AccountEntry> List = new ArrayList<>();
+        Account account = getAccount(accountNumber);
+        return account.generateBill();
+//        List= account.getEntryList();
+//        for(AccountEntry e: List){
+//            result+=(e.report()+ " \n");
+//        }
+//        return result;
     }
 }
