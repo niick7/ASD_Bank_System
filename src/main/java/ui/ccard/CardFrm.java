@@ -4,8 +4,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
-public class CardFrm extends javax.swing.JFrame
-{
+public class CardFrm extends javax.swing.JFrame {
     /****
      * init variables in the object
      ****/
@@ -18,8 +17,7 @@ public class CardFrm extends javax.swing.JFrame
     CardFrm thisframe;
     private Object rowdata[];
 
-    public CardFrm()
-    {
+    public CardFrm() {
         thisframe=this;
 
         setTitle("Credit-card processing Application.");
@@ -87,8 +85,7 @@ public class CardFrm extends javax.swing.JFrame
      * Sets the Look and Feel to the System Look and Feel.
      * Creates a new JFrame1 and makes it visible.
      *****************************************************/
-    static public void main(String args[])
-    {
+    static public void main(String args[]) {
         try {
             // Add the following code if you want the Look and Feel
             // to be set to the Look and Feel of the native system.
@@ -117,8 +114,7 @@ public class CardFrm extends javax.swing.JFrame
     javax.swing.JButton JButton_Withdraw = new javax.swing.JButton();
     javax.swing.JButton JButton_Exit = new javax.swing.JButton();
 
-    void exitApplication()
-    {
+    void exitApplication() {
         try {
             this.setVisible(false);    // hide the Frame
             this.dispose();            // free the system resources
@@ -127,8 +123,7 @@ public class CardFrm extends javax.swing.JFrame
         }
     }
 
-    class SymWindow extends java.awt.event.WindowAdapter
-    {
+    class SymWindow extends java.awt.event.WindowAdapter {
         public void windowClosing(java.awt.event.WindowEvent event)
         {
             Object object = event.getSource();
@@ -148,8 +143,7 @@ public class CardFrm extends javax.swing.JFrame
         }
     }
 
-    class SymAction implements java.awt.event.ActionListener
-    {
+    class SymAction implements java.awt.event.ActionListener {
         public void actionPerformed(java.awt.event.ActionEvent event)
         {
             Object object = event.getSource();
@@ -199,8 +193,7 @@ public class CardFrm extends javax.swing.JFrame
         }
     }
 
-    void JButtonGenerateBill_actionPerformed(java.awt.event.ActionEvent event)
-    {
+    void JButtonGenerateBill_actionPerformed(java.awt.event.ActionEvent event) {
         int selection = JTable1.getSelectionModel().getMinSelectionIndex();
         if (selection >= 0){
             String CC = (String) model.getValueAt(selection,2);
@@ -230,8 +223,7 @@ public class CardFrm extends javax.swing.JFrame
         }
     }
 
-    void JButtonDeposit_actionPerformed(java.awt.event.ActionEvent event)
-    {
+    void JButtonDeposit_actionPerformed(java.awt.event.ActionEvent event) {
         // get selected name
         int selection = JTable1.getSelectionModel().getMinSelectionIndex();
         if (selection >=0){
@@ -249,8 +241,7 @@ public class CardFrm extends javax.swing.JFrame
         }
     }
 
-    void JButtonWithdraw_actionPerformed(java.awt.event.ActionEvent event)
-    {
+    void JButtonWithdraw_actionPerformed(java.awt.event.ActionEvent event) {
         // get selected name
         int selection = JTable1.getSelectionModel().getMinSelectionIndex();
         if (selection >= 0){
