@@ -3,7 +3,6 @@ package framework.ccard;
 import framework.Common.AccountType;
 
 public class BronzeAccount implements AccountType {
-
     private double getMonthlyInterest(double credit) {
         return credit * 0.1;
     }
@@ -24,5 +23,4 @@ public class BronzeAccount implements AccountType {
     public String getAccountTypeName() {
         return "Bronze";
     }
-
 }

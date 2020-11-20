@@ -7,7 +7,6 @@ import java.util.HashMap;
 
 public class BankingAccountDAO implements AccountDAO {
     private HashMap<String, Account> bankingAccountMap;
-    private Account account;
 
     public BankingAccountDAO() {
         bankingAccountMap = new HashMap<>();
@@ -38,6 +37,4 @@ public class BankingAccountDAO implements AccountDAO {
             return true;
         }return false;
     }
-
-
 }

@@ -135,7 +135,6 @@ public class CreditCardAccount implements Account {
                 "\nyour total payment / deposit of this month: " +totalPaymentOfThisMonth+
                 "\nyour new balance:"+ newBalance+
                 "\nyour total due or minimum payment: " + totalDue +"  }";
-
     }
 
 

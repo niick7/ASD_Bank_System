@@ -38,10 +38,11 @@ public class CardFrm extends javax.swing.JFrame
         JScrollPane1 = new JScrollPane();
         model = new DefaultTableModel();
         JTable1 = new JTable(model);
+        model.addColumn("ID");
         model.addColumn("Name");
-        model.addColumn("CC ID");
-        model.addColumn("Customer Type");
-        model.addColumn("Account Type");
+        model.addColumn("CC Number");
+        model.addColumn("Customer");
+        model.addColumn("Acc Type");
         model.addColumn("Balance");
         rowdata = new Object[7];
         newaccount=false;
@@ -202,7 +203,7 @@ public class CardFrm extends javax.swing.JFrame
     {
         int selection = JTable1.getSelectionModel().getMinSelectionIndex();
         if (selection >= 0){
-            String CC = (String) model.getValueAt(selection,1);
+            String CC = (String) model.getValueAt(selection,2);
 
             JDialogGenBill billFrm = new JDialogGenBill();
             billFrm.setBounds(450, 20, 400, 350);
@@ -214,16 +215,15 @@ public class CardFrm extends javax.swing.JFrame
     }
 
     void JButtonAddInterest_actionPerformed(java.awt.event.ActionEvent event) {
-        System.out.println("Added interest");
         int selection = JTable1.getSelectionModel().getMinSelectionIndex();
         if (selection >= 0){
-            String name = (String) model.getValueAt(selection, 0);
-            String CC = (String) model.getValueAt(selection,1);
-            double balance = Double.parseDouble((String) model.getValueAt(selection, 4));
+            String name = (String) model.getValueAt(selection, 1);
+            String CC = (String) model.getValueAt(selection,2);
+            double balance = Double.parseDouble((String) model.getValueAt(selection, 5));
             if (balance > 0) {
                 double result = Controller.addInterest(CC, 0);
                 JOptionPane.showMessageDialog(JButton_Withdraw, " "+ name +" Your interest is calculated, and the current balance is $"+result+" !");
-                model.setValueAt(String.valueOf(result), selection, 4);
+                model.setValueAt(String.valueOf(result), selection, 5);
             } else {
                 JOptionPane.showMessageDialog(JButton_Withdraw, "Dear "+ name +". Your balance should be greater than 0 to add interest.");
             }
@@ -235,8 +235,8 @@ public class CardFrm extends javax.swing.JFrame
         // get selected name
         int selection = JTable1.getSelectionModel().getMinSelectionIndex();
         if (selection >=0){
-            String name = (String)model.getValueAt(selection, 0);
-            String CC = (String) model.getValueAt(selection,1);
+            String name = (String)model.getValueAt(selection, 1);
+            String CC = (String) model.getValueAt(selection,2);
 
             // Show the dialog for adding deposit amount for the current mane
             JDialog_Deposit dep = new JDialog_Deposit(thisframe,name);
@@ -245,7 +245,7 @@ public class CardFrm extends javax.swing.JFrame
 
             double amount = Double.parseDouble(amountDeposit);
             double result = Controller.deposit(CC, amount);
-            model.setValueAt(String.valueOf(result),selection, 4);
+            model.setValueAt(String.valueOf(result),selection, 5);
         }
     }
 
@@ -254,17 +254,17 @@ public class CardFrm extends javax.swing.JFrame
         // get selected name
         int selection = JTable1.getSelectionModel().getMinSelectionIndex();
         if (selection >= 0){
-            String name = (String)model.getValueAt(selection, 0);
-            String CC = (String) model.getValueAt(selection,1);
+            String name = (String)model.getValueAt(selection, 1);
+            String CC = (String) model.getValueAt(selection,2);
 
             // Show the dialog for adding withdraw amount for the current mane
-            JDialog_Withdraw wd = new JDialog_Withdraw(thisframe,name);
+            JDialog_Withdraw wd = new JDialog_Withdraw(thisframe, name);
             wd.setBounds(430, 15, 275, 140);
             wd.show();
 
             double amount = Double.parseDouble(amountDeposit);
             double result = Controller.withdraw(CC, amount);
-            model.setValueAt(String.valueOf(result), selection, 4);
+            model.setValueAt(String.valueOf(result), selection, 5);
             if (result < 0){
 //                JOptionPane.showMessageDialog(JButton_Withdraw, " "+name+" Your balance is negative: $"+String.valueOf(result)+" !","Warning: negative balance",JOptionPane.WARNING_MESSAGE);
             }

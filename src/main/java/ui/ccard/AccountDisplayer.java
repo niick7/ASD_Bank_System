@@ -10,6 +10,9 @@ public class AccountDisplayer {
         this.account = account;
     }
 
+    public String getID(){
+        return account.getAccountID();
+    }
     public String getName(){
         return account.getCustomer().getFullName();
     }
@@ -17,8 +20,8 @@ public class AccountDisplayer {
         return account.getAccountNumber();
     }
     public String getCustomerType(){
-        if(account.getCustomer() instanceof PersonalAccount) return "Personal Account";
-        return "Company Account";
+        if(account.getCustomer() instanceof PersonalAccount) return "Personal";
+        return "Company";
     }
     public String getAccountType(){
         return account.getAccountType().getAccountTypeName();

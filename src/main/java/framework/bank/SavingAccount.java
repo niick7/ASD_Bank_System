@@ -3,7 +3,6 @@ package framework.bank;
 import framework.Common.AccountType;
 
 public class SavingAccount implements AccountType {
-
     @Override
     public double[] execute(double credit) {
         double[] a = new double[1];
@@ -23,5 +22,4 @@ public class SavingAccount implements AccountType {
     public String getAccountTypeName() {
         return "SavingAccount";
     }
-
 }

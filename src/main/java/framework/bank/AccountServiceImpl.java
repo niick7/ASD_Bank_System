@@ -41,7 +41,7 @@ public class AccountServiceImpl implements AccountService {
     public void deposit(String accountNumber, double amount) {
         Account account = accountDAO.getAccount(accountNumber);
         if(account==null){
-            System.out.println("no account with this ID");
+            System.out.println("No account with this ID");
         }else {
             account.deposit(amount);
             accountDAO.updateAccount(account);

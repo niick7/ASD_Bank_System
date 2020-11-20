@@ -16,14 +16,12 @@ public class Controller {
         String code= accountNumberGenerator.generateCode();
         displayer = new AccountDisplayer(templateToCreateAccount.create(name,street,city,state,zip,email,ID,dateOfBirth, customerType,accountType,code));
         String[] result = new String[6];
-        result[0] = displayer.getName();
-        result[1] = displayer.getAccountNumber();
-        result[2] = displayer.getCustomerType();
-        result[3] = displayer.getAccountType();
-        result[4] = String.valueOf(displayer.getBalance());
-        result[5] = displayer.getCity();
-        System.out.println(code);
-
+        result[0] = displayer.getID();
+        result[1] = displayer.getName();
+        result[2] = displayer.getAccountNumber();
+        result[3] = displayer.getCustomerType();
+        result[4] = displayer.getAccountType();
+        result[5] = String.valueOf(displayer.getBalance());
 
         return result;
     }

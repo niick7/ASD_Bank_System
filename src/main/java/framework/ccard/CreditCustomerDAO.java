@@ -5,7 +5,6 @@ import framework.Common.Customer;
 import java.util.HashMap;
 
 public class CreditCustomerDAO implements framework.Common.CustomerDAO {
-
     private HashMap<String, Customer> customerList;
 
     public CreditCustomerDAO() {

@@ -3,7 +3,6 @@ package framework.ccard;
 import framework.Common.AccountType;
 
 public class SilverAccount implements AccountType {
-
     private double getMonthlyInterest(double credit) {
         return credit * 0.08;
     }

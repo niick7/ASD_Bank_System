@@ -3,7 +3,6 @@ package framework.ccard;
 import framework.Common.AccountType;
 
 public class GoldAccount implements AccountType {
-
     private double getMonthlyInterest(double credit) {
         return credit * 0.06;
     }
@@ -24,5 +23,4 @@ public class GoldAccount implements AccountType {
     public String getAccountTypeName() {
         return "Gold";
     }
-
 }

@@ -7,7 +7,6 @@ import java.util.HashMap;
 
 public class CreditCardAccountDAO implements AccountDAO {
     private HashMap<String, Account> creditCardMap;
-    private Account account;
 
     public CreditCardAccountDAO() {
         creditCardMap = new HashMap<>();
@@ -31,6 +30,7 @@ public class CreditCardAccountDAO implements AccountDAO {
             return creditCardMap.get(accountNumber);
         }return null;
     }
+
     public boolean updateAccount(Account account){
         if(null == account) return false;
         if(findAccount(account.getAccountNumber())){
@@ -39,6 +39,4 @@ public class CreditCardAccountDAO implements AccountDAO {
             return true;
         }return false;
     }
-
-
 }

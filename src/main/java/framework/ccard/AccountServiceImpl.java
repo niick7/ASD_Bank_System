@@ -70,7 +70,7 @@ public class AccountServiceImpl implements AccountService {
         Account account = getAccount(accountNumber);
         double[] collector = account.getAccountType().execute(account.getBalance());
         interest = Math.floor(collector[0] * 100) / 100;;
-        minimumPayment = collector[1];
+        minimumPayment = Math.floor(collector[1] * 100) / 100;
         System.out.println("This is your interest: " + interest);
         System.out.println("This is your minimumPayment: " + minimumPayment);
         withdraw(accountNumber, interest);
@@ -78,14 +78,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public String generateReport(String accountNumber) {
-//        String result="";
-//        List<AccountEntry> List = new ArrayList<>();
         Account account = getAccount(accountNumber);
         return account.generateBill();
-//        List= account.getEntryList();
-//        for(AccountEntry e: List){
-//            result+=(e.report()+ " \n");
-//        }
-//        return result;
     }
 }

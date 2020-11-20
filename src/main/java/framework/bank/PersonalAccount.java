@@ -1,6 +1,4 @@
 package framework.bank;
-
-
 import framework.Common.Account;
 import framework.Common.Address;
 import framework.Common.Customer;
